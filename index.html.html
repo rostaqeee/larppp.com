@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rostaqeee</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #ffffff;
+    --bg2: #f5f5f7;
+    --bg3: #e8e8ed;
+    --text: #1d1d1f;
+    --text2: #6e6e73;
+    --text3: #aeaeb2;
+    --border: #d2d2d7;
+    --accent: #0071e3;
+    --accent-hover: #0077ed;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #000000;
+      --bg2: #1c1c1e;
+      --bg3: #2c2c2e;
+      --text: #f5f5f7;
+      --text2: #98989d;
+      --text3: #48484a;
+      --border: #3a3a3c;
+      --accent: #2997ff;
+      --accent-hover: #3da3ff;
+    }
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 52px;
+    background: rgba(255,255,255,0.72);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    transition: background 0.3s;
+  }
+  @media (prefers-color-scheme: dark) {
+    nav { background: rgba(0,0,0,0.72); }
+  }
+  nav span {
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 160px 24px 100px;
+    text-align: center;
+    max-width: 980px;
+    margin: 0 auto;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 980px;
+    padding: 5px 14px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text2);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: heroUp 0.8s cubic-bezier(0.4,0,0.2,1) 0.1s forwards;
+    cursor: default;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  }
+  .pill:hover {
+    background: var(--bg3);
+    border-color: var(--text3);
+    transform: scale(1.04);
+  }
+  .pill .dot {
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s ease infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.5; transform: scale(0.7); }
+  }
+
+  .hero h1 {
+    font-size: clamp(3.5rem, 10vw, 7rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1.0;
+    color: var(--text);
+    opacity: 0;
+    animation: heroUp 0.8s cubic-bezier(0.4,0,0.2,1) 0.22s forwards;
+  }
+
+  .hero .sub {
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    font-weight: 300;
+    color: var(--text2);
+    margin-top: 16px;
+    letter-spacing: -0.02em;
+    line-height: 1.4;
+    opacity: 0;
+    animation: heroUp 0.8s cubic-bezier(0.4,0,0.2,1) 0.38s forwards;
+  }
+  .hero .sub strong { color: var(--text); font-weight: 500; }
+
+  .cta-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 36px;
+    opacity: 0;
+    animation: heroUp 0.8s cubic-bezier(0.4,0,0.2,1) 0.54s forwards;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 980px;
+    padding: 12px 26px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s cubic-bezier(0.4,0,0.2,1), box-shadow 0.2s;
+  }
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0);
+    transition: background 0.2s;
+  }
+  .btn-primary:hover {
+    transform: scale(1.04);
+    box-shadow: 0 4px 20px rgba(0,113,227,0.35);
+  }
+  .btn-primary:active { transform: scale(0.97); }
+
+  .btn-secondary {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: gap 0.25s cubic-bezier(0.4,0,0.2,1), opacity 0.2s;
+  }
+  .btn-secondary:hover { gap: 10px; opacity: 0.8; }
+
+  /* ── STATS ── */
+  .stats {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .stat {
+    padding: 52px 32px;
+    text-align: center;
+    border-right: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+    transition: background 0.25s;
+  }
+  .stat:last-child { border-right: none; }
+
+  .stat::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(0,113,227,0.06) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .stat:hover { background: var(--bg); }
+  .stat:hover::before { opacity: 1; }
+
+  .stat-num {
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    line-height: 1;
+    transition: transform 0.2s;
+    display: inline-block;
+  }
+  .stat:hover .stat-num { transform: scale(1.06); }
+
+  .stat-unit {
+    font-size: 1.7rem;
+    font-weight: 300;
+    color: var(--text2);
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--text2);
+    margin-top: 8px;
+    letter-spacing: -0.01em;
+    transition: color 0.2s;
+  }
+  .stat:hover .stat-label { color: var(--text); }
+
+  /* scroll-reveal for stats */
+  .stat { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease, background 0.25s; }
+  .stat.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── AWARD ── */
+  .award-section {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 110px 24px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .award-icon {
+    width: 72px; height: 72px;
+    margin: 0 auto 28px;
+    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    cursor: default;
+  }
+  .award-icon:hover { transform: scale(1.15) rotate(-4deg); }
+
+  .award-section h2 {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+  .award-section p {
+    font-size: 1rem;
+    color: var(--text2);
+    margin-top: 14px;
+    line-height: 1.75;
+    letter-spacing: -0.01em;
+  }
+
+  /* scroll reveal generic */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1), transform 0.7s cubic-bezier(0.4,0,0.2,1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.22s; }
+  .reveal-delay-3 { transition-delay: 0.34s; }
+
+  /* ── LINKS ── */
+  .links-section {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 80px 24px 110px;
+  }
+
+  .links-section h3 {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--text3);
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .link-list {
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .link-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 22px;
+    background: var(--bg2);
+    text-decoration: none;
+    color: var(--text);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.18s, padding-left 0.25s cubic-bezier(0.4,0,0.2,1);
+    font-size: 0.95rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .link-item:last-child { border-bottom: none; }
+
+  .link-item::after {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--accent);
+    transform: scaleY(0);
+    transform-origin: center;
+    transition: transform 0.25s cubic-bezier(0.4,0,0.2,1);
+  }
+  .link-item:hover { background: var(--bg); padding-left: 28px; }
+  .link-item:hover::after { transform: scaleY(1); }
+
+  .link-label { font-weight: 500; }
+  .link-sub { font-size: 0.78rem; color: var(--text3); margin-top: 2px; }
+  .link-arrow {
+    color: var(--text3);
+    font-size: 1.1rem;
+    transition: transform 0.2s, color 0.2s;
+  }
+  .link-item:hover .link-arrow { transform: translateX(4px); color: var(--accent); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 24px;
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--text3);
+  }
+
+  /* ── KEYFRAMES ── */
+  @keyframes heroUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    .stat { padding: 36px 16px; }
+    .stat-num { font-size: 2.2rem; }
+    .stat-unit { font-size: 1.3rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav><span>Rostaqeee</span></nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="pill"><span class="dot"></span>#1 LARPer</div>
+  <h1>Rostaqeee</h1>
+  <p class="sub">Social Media Content Creator<br><strong>167K followers 70M views.</strong></p>
+  <div class="cta-row">
+    <a href="https://www.m.youtube.com/@YappingCookie" class="btn-primary" target="_blank">Watch on YouTube</a>
+    <a href="#links" class="btn-secondary">Find me everywhere →</a>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat" data-target="167000" style="transition-delay:0s">
+    <div class="stat-num"><span class="count">0</span></div>
+    <div class="stat-label">Followers</div>
+  </div>
+  <div class="stat" data-target="70000000" style="transition-delay:0.12s">
+    <div class="stat-num"><span class="count">0</span></div>
+    <div class="stat-label">Total views</div>
+  </div>
+  <div class="stat" data-target="352000" style="transition-delay:0.24s">
+    <div class="stat-num"><span class="count">0</span></div>
+    <div class="stat-label">Watch hours</div>
+  </div>
+</div>
+
+<!-- AWARD -->
+<section class="award-section">
+  <div class="award-icon reveal">
+    <svg viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="9" y="7" width="54" height="40" rx="7" fill="#c8c8cc"/>
+      <rect x="11" y="9" width="50" height="36" rx="6" fill="#e8e8ed"/>
+      <polygon points="30,20 30,38 48,29" fill="#b0b0b5"/>
+      <rect x="27" y="47" width="18" height="5" rx="2.5" fill="#aeaeb2"/>
+      <rect x="20" y="52" width="32" height="4" rx="2" fill="#c8c8cc"/>
+    </svg>
+  </div>
+  <h2 class="reveal reveal-delay-1">Silver Play Button<br>Award Winner</h2>
+  <p class="reveal reveal-delay-2">Awarded by YouTube for surpassing 100,000 subscribers — earned through years of authentic LARP storytelling and an incredible community.</p>
+</section>
+
+<!-- LINKS -->
+<section class="links-section" id="links">
+  <h3 class="reveal">Find the realm</h3>
+  <div class="link-list reveal reveal-delay-1">
+    <a href="https://www.youtube.com/@YappingCookie" class="link-item" target="_blank" rel="noopener">
+      <div><div class="link-label">YouTube</div><div class="link-sub">Main channel · 40K subscribers</div></div>
+      <span class="link-arrow">›</span>
+    </a>
+    <a href="https://instagram.com/rostaqee" class="link-item" target="_blank" rel="noopener">
+      <div><div class="link-label">Instagram</div><div class="link-sub">Behind the shield</div></div>
+      <span class="link-arrow">›</span>
+    </a>
+    <a href="https://tiktok.com/@rostaqeee" class="link-item" target="_blank" rel="noopener">
+      <div><div class="link-label">TikTok</div><div class="link-sub">Short quests</div></div>
+      <span class="link-arrow">›</span>
+    </a>
+  </div>
+</section>
+
+<footer>© 2026 rostaqeee · All rights reserved</footer>
+
+<script>
+// ── Scroll reveal ──
+const revealEls = document.querySelectorAll('.reveal, .stat');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      // Trigger counter if it's a stat
+      if (e.target.classList.contains('stat') && !e.target._counted) {
+        e.target._counted = true;
+        const target = parseInt(e.target.dataset.target);
+        const countEl = e.target.querySelector('.count');
+        animateCount(countEl, target);
+      }
+    }
+  });
+}, { threshold: 0.15 });
+
+revealEls.forEach(el => observer.observe(el));
+
+// ── Counter animation ──
+function animateCount(el, target) {
+  const duration = 1400;
+  const start = performance.now();
+
+  function easeOutExpo(t) {
+    return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+  }
+
+  function tick(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = easeOutExpo(progress);
+    const current = Math.round(eased * target);
+    el.textContent = current.toLocaleString();
+    if (progress < 1) requestAnimationFrame(tick);
+    else el.textContent = target.toLocaleString();
+  }
+  requestAnimationFrame(tick);
+}
+
+// ── Nav shadow on scroll ──
+const nav = document.querySelector('nav');
+window.addEventListener('scroll', () => {
+  nav.style.borderBottomColor = window.scrollY > 10
+    ? 'var(--border)'
+    : 'transparent';
+}, { passive: true });
+</script>
+
+</body>
+</html>
